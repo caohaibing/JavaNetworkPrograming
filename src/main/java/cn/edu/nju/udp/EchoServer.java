@@ -24,16 +24,17 @@ public class EchoServer {
 		while (true) {
 			try {
 				DatagramPacket dp = new DatagramPacket(new byte[512], 512);
-				
+
 				socket.receive(dp); // 接收客户端的数据
-				System.out.println("连接到：" + dp.getAddress() + ":" + dp.getPort());
-				
+				System.out.println("连接到：" + dp.getAddress() + ":"
+						+ dp.getPort());
+
 				String str = new String(dp.getData(), 0, dp.getLength()); // 将数据转换为字符串
 				System.out.println("客户端发来的信息为:" + str);
-				int tmp=new Random().nextInt()%100;
+				int tmp = new Random().nextInt() % 100;
 				dp.setData(new String("回复客户端一个随机数吧：" + tmp).getBytes());
 				socket.send(dp);// 发送出数据
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
