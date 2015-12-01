@@ -22,6 +22,7 @@ public class SimpleClient {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) {
 		String url = "rmi:localhost";
 		try {

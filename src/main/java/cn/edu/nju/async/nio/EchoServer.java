@@ -23,6 +23,7 @@ import cn.edu.nju.http.Utils;
 public class EchoServer {
 	private ServerSocketChannel serverSocketChannel;
 	private int port = 8000;
+	@SuppressWarnings("unused")
 	private ThreadPoolExecutor threadPool;
 	private int POOL_SIZE = 4;
 	private Selector selector;
@@ -31,10 +32,10 @@ public class EchoServer {
 		selector = Selector.open();
 		serverSocketChannel = ServerSocketChannel.open();
 		serverSocketChannel.socket().setReuseAddress(true);
-		
+
 		serverSocketChannel.configureBlocking(false);// 设置为异步
-		threadPool = (ThreadPoolExecutor) Executors
-				.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * POOL_SIZE);
+		threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime
+				.getRuntime().availableProcessors() * POOL_SIZE);
 		serverSocketChannel.socket().bind(new InetSocketAddress(port));//这边是socket，不是channel
 		System.out.println("服务器已启动！");
 	}
@@ -52,13 +53,16 @@ public class EchoServer {
 				iterator.remove();// 取出服务的要删除该项
 
 				if (key.isAcceptable()) {
-					ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
+					ServerSocketChannel ssc = (ServerSocketChannel) key
+							.channel();
 					SocketChannel socketChannel = ssc.accept();
-					System.out.println(
-							"接收到客户的连接：" + socketChannel.getRemoteAddress() + ":" + socketChannel.socket().getPort());
+					System.out.println("接收到客户的连接："
+							+ socketChannel.getRemoteAddress() + ":"
+							+ socketChannel.socket().getPort());
 					socketChannel.configureBlocking(false);
 					ByteBuffer buffer = ByteBuffer.allocate(1024);
-					socketChannel.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ, buffer);
+					socketChannel.register(selector, SelectionKey.OP_WRITE
+							| SelectionKey.OP_READ, buffer);
 
 				}
 				if (key.isReadable()) {
@@ -101,6 +105,7 @@ public class EchoServer {
 		ByteBuffer buffer = (ByteBuffer) selectionKey.attachment();
 		SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
 
+		@SuppressWarnings("unused")
 		ByteBuffer writeBuf = ByteBuffer.allocate(1024);
 
 		buffer.flip();

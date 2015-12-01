@@ -57,6 +57,7 @@ public class EchoClient {
 	 * @throws IOException
 	 */
 	public void send(SelectionKey key) throws IOException {
+		@SuppressWarnings("unused")
 		SocketChannel sc = (SocketChannel) key.channel();
 		synchronized (sendBuf) {
 			sendBuf.flip();
