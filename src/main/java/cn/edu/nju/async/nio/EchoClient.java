@@ -132,7 +132,7 @@ public class EchoClient {
 	 */
 	public static void main(String[] args) throws IOException {
 		try {
-			EchoClient echoClient = new EchoClient();
+			final EchoClient echoClient = new EchoClient();
 			new Thread() {
 				@Override
 				public void run() {
